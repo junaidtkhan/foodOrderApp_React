@@ -3,23 +3,30 @@ import { Cart } from './Components/Cart/Cart';
 import { Header } from './Components/Layout/Header';
 import { Meals } from './Components/Meals/Meals';
 import { CartProvider } from './Store/CartProvider';
+import ChatApp from './ChatBot/ChatApp';
 import './App.css';
 function App() {
-  const [cartIsShown,setCartIsShown]=useState(false)
-  const showCartHandler=()=>{
+  const [chatOpen, setChatOpen] = useState(true)
+  const [cartIsShown, setCartIsShown] = useState(false)
+  const showCartHandler = () => {
     setCartIsShown(true)
   }
-  const hideCartHandler=()=>{
+  const hideCartHandler = () => {
     setCartIsShown(false)
   }
-  
+
   return (
     <CartProvider>
-      {cartIsShown && <Cart onCartHide={hideCartHandler}/>}
+      {!chatOpen && <div>
+        {cartIsShown && <Cart onCartHide={hideCartHandler}/>}
       <Header onCartShow={showCartHandler}/>
-      <main>
-        <Meals />
-      </main>
+        <main>
+          <Meals />
+
+        </main>
+      </div>}
+
+      {chatOpen && <ChatApp />}
     </CartProvider>
   );
 }
